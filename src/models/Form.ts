@@ -9,7 +9,7 @@ const formSchema = new Schema({
         type: String,
         required: true,
     },
-    fillings: {
+    applicationsNumber: {
         type: Number,
         default: 0
     },
