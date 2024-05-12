@@ -5,7 +5,7 @@ import React from 'react'
 
 const getForm = async () => {
 	try {
-		
+
 		const result = await fetch("http://localhost:3000/api/form/[formId]", { cache: "no-store" });
 
 		if (!result.ok) {
@@ -26,6 +26,12 @@ export default async function Form() {
 			<div>
 				{/* {form} */}
 			</div>
+			<button
+				type="submit"
+				className="py-3 px-6 w-fit"
+			>
+				Submit
+			</button>
 		</div>
 	);
 }
