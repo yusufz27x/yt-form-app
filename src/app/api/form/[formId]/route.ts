@@ -13,9 +13,8 @@ export const GET = async (request:NextRequest) => {
         return NextResponse.json({ error: 'rate limited' }, { status: 429 })
     await ConnectDB();
 
-    const url = new URL(request.url);
-    const searchParams = new URLSearchParams(url.search);
-    const id = searchParams.get('formId');
+    const url = request.url;
+    const id = url.split('/').pop();
 
     const form = await Form.findById(id);
     return NextResponse.json({ form, id }, { status: 200 });
