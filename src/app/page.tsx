@@ -1,9 +1,26 @@
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <main>
+const getForms = async () => {
+	try {
+		const result = await fetch("http://localhost:3000/api/form", { cache: "no-store", });
 
-    </main>
-  );
+		if (!result.ok) {
+			throw new Error('Failed to fetch forms');
+		}
+
+	} catch (error) { console.log("Error loading forms", error); }
+}
+
+export default async function Home() {
+
+	const { forms } = await getForms();
+
+	return (
+		<main>
+			{forms.map(form => (<div className="mx-4">
+				{form}
+			</div>
+			))}
+		</main>
+	);
 }
