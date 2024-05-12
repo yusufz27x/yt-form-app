@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const getForms = async () => {
 	try {
-		
+
 		const result = await fetch("http://localhost:3000/api/form", { cache: "no-store", });
 
 		if (!result.ok) {
@@ -19,7 +19,6 @@ export default async function Home() {
 
 	return (
 		<main>
-			// No API yet
 			{/* {forms.map(form => (<div className="mx-4">
 				{form}
 			</div>

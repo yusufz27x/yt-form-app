@@ -24,7 +24,6 @@ export default async function Form() {
 		<div className='mx-4'>
 			<FormHeader />
 			<div>
-				// No API yet
 				{/* {form} */}
 			</div>
 		</div>
