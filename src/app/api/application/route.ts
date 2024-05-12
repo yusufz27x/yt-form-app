@@ -19,7 +19,6 @@ export const POST = async (request : NextRequest, response: NextResponse) => {
         return NextResponse.json({ message: "Application Created"}, { status: 201 });
     }
     catch (error) {
-        console.log(error);
         return NextResponse.json({ message: "Application Cannot Created"}, { status: 401 });
     }
 }
