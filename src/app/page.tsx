@@ -9,6 +9,8 @@ const getForms = async () => {
 			throw new Error('Failed to fetch forms');
 		}
 
+		return result.json();
+
 	} catch (error) { console.log("Error loading forms", error); }
 }
 
