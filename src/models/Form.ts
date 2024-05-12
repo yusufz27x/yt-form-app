@@ -29,5 +29,11 @@ const formSchema = new Schema({
 
 }, { timestamps: true });
 
-const FormModel = mongoose.models.FormModel || mongoose.model("forms", formSchema)
+let FormModel: mongoose.Model<any>
+try{
+     FormModel = mongoose.model("forms")
+}
+catch(error){
+    FormModel = mongoose.model("forms", formSchema)
+}
 export default FormModel;
