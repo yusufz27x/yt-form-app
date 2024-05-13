@@ -18,18 +18,32 @@ export const formData = Array.from({ length: 15 }, (_, index) => {
     };
 });
 
-
 export const applicationData = Array.from({length: formData.length * 12}, (_, index) => {
     return {
         id: String(index + 1),
-        formId: String((index % 12) + 1),
-        answers: Array.from({length: formData[index % 12].questions.length}, (_, index) => {
-            if (formData[index % 12].questions[index].type == 5) {
-                formData[index % 12].questions[index].options[Math.floor(Math.random() * 3)];
-            }
-            else {
-                "Answer" + String(index);
+        formId: String((index % formData.length) + 1),
+        answers: Array.from({length: formData[index % formData.length].questions.length}, (_, index) => {
+            const question = formData[index % formData.length].questions[index];
+            if (question && question.type === 5) {
+                return question.options[Math.floor(Math.random() * question.options.length)];
+            } else {
+                return "Answer" + String(index);
             }
         }),
     }
 });
+
+// export const applicationData = Array.from({length: formData.length * 12}, (_, index) => {
+//     return {
+//         id: String(index + 1),
+//         formId: String((index % 12) + 1),
+//         answers: Array.from({length: formData[index % 12].questions.length}, (_, index) => {
+//             if (formData[index % 12].questions[index].type == 5) {
+//                 formData[index % 12].questions[index].options[Math.floor(Math.random() * 3)];
+//             }
+//             else {
+//                 "Answer" + String(index);
+//             }
+//         }),
+//     }
+// });
