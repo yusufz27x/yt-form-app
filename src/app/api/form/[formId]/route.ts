@@ -19,6 +19,9 @@ export const GET = async (request: NextRequest) => {
         const url = request.url;
         const id = url.split('/').pop();
 
+        console.log(url);
+        console.log(id);
+
         const form = await Form.findById(id);
         return NextResponse.json({ form, id }, { status: 200 });
     } catch (error) {

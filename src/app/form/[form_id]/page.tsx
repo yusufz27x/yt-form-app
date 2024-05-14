@@ -2,13 +2,15 @@
 
 import FormHeader from '@/app/components/FormHeader';
 import React from 'react'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation';
 
 const getForm = async () => {
-	const router = useRouter();
+	
 
 	try {
-		const result = await fetch("http://localhost:3000/api/form/${router.query.formId}", { cache: "no-store" });
+		const pathname = usePathname();
+		console.log(usePathname());
+		const result = await fetch(`http://localhost:3000/api/form/${pathname.split("/").pop()}`, { cache: "no-store" });
 
 		if (!result.ok) {
 			throw new Error('Failed to fetch form');
