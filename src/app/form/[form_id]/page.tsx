@@ -1,26 +1,25 @@
-"use client"
+'use client'
 
 import FormHeader from '@/app/components/FormHeader';
 import React from 'react'
+import { useRouter } from 'next/router'
 
 const getForm = async () => {
-	try {
+	const router = useRouter();
 
-		const result = await fetch("http://localhost:3000/api/form/[formId]", { cache: "no-store" });
+	try {
+		const result = await fetch("http://localhost:3000/api/form/${router.query.formId}", { cache: "no-store" });
 
 		if (!result.ok) {
 			throw new Error('Failed to fetch form');
 		}
 
 		return result.json();
-
 	} catch (error) { console.log("Error loading form", error); }
 }
 
 export default async function Form() {
-
-	// No API yet
-	/* const { form } = await getForm(); */
+	const test = await getForm();
 
 	return (
 		<div className='mx-4'>
