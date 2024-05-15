@@ -5,6 +5,7 @@ import EmailInput from './components/formInputs/EmailInput'
 import FullName from './components/formInputs/FullName'
 import PhoneNumberInput from './components/formInputs/PhoneNumberInput'
 import ShortAnswerInput from './components/formInputs/ShortAnswerInput'
+import Form, { ApiForm } from "../models/Form"
 
 const getForms = async () => {
 
@@ -30,18 +31,23 @@ export default async function Home() {
 
 	return (
 		<main className="flex justify-center items-center h-screen">
+
+			{forms.map((form: ApiForm) => (<div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
+				<div className='text-5xl text-center text-orange-400 font-extrabold mb-2'>{form.name}</div>
+			</div>))}
+
 			{/* {forms.map(form => (<div className="mx-4">
 				{form}
 			</div>
 			))} */}
 
-			<div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
+			{/* <div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
 				<div className='text-5xl text-center text-orange-400 font-extrabold mb-2'>Testing</div>
 				<FullName />
 				<EmailInput />
 				<PhoneNumberInput />
 				<ShortAnswerInput question={'Is it ok?'} />
-			</div>
+			</div> */}
 		</main>
 	);
 }

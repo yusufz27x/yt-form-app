@@ -46,10 +46,28 @@ const formSchema = new Schema({
 }, { timestamps: true });
 
 let FormModel: mongoose.Model<any>
-try{
-     FormModel = mongoose.model("forms")
+try {
+    FormModel = mongoose.model("forms")
 }
-catch(error){
+catch (error) {
     FormModel = mongoose.model("forms", formSchema)
 }
 export default FormModel;
+
+export interface ApiForm {
+    _id: {
+        $oid: string;
+    };
+    name: string;
+    description: string;
+    applicationsNumber: number;
+    questions: ApiQuestion[];
+    isActive: boolean;
+}
+
+export interface ApiQuestion {
+    type: number;
+    question: string;
+    isRequired: boolean;
+    options?: string[];
+}
