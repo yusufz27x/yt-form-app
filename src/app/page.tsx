@@ -1,11 +1,8 @@
 'use client'
 
-import React, { useState } from 'react'
-import EmailInput from './components/formInputs/EmailInput'
-import FullName from './components/formInputs/FullName'
-import PhoneNumberInput from './components/formInputs/PhoneNumberInput'
-import ShortAnswerInput from './components/formInputs/ShortAnswerInput'
-import Form, { ApiForm } from "../models/Form"
+import React from 'react'
+import { ApiForm } from "../models/Form"
+import Link from 'next/link'
 
 const getForms = async () => {
 
@@ -30,24 +27,17 @@ export default async function Home() {
 	const { forms } = await getForms();
 
 	return (
-		<main className="flex justify-center items-center h-screen">
-
-			{forms.map((form: ApiForm) => (<div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
-				<div className='text-5xl text-center text-orange-400 font-extrabold mb-2'>{form.name}</div>
-			</div>))}
-
-			{/* {forms.map(form => (<div className="mx-4">
-				{form}
+		<main className="flex justify-center items-start h-screen" style={{ paddingTop: '10vh' }}>
+			<div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
+				{forms.map((form: ApiForm) => (
+					<div className='my-10'>
+						<Link href={`/form/${form._id}`}>
+							<div className='text-5xl text-center text-orange-400 font-extrabold mb-2'>{form.name}</div>
+						</Link>
+						<div className='text-3xl text-center text-orange-400 font-light mb-2'>{form.description}</div>
+					</div>
+				))}
 			</div>
-			))} */}
-
-			{/* <div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
-				<div className='text-5xl text-center text-orange-400 font-extrabold mb-2'>Testing</div>
-				<FullName />
-				<EmailInput />
-				<PhoneNumberInput />
-				<ShortAnswerInput question={'Is it ok?'} />
-			</div> */}
 		</main>
 	);
 }
