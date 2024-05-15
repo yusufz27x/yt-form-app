@@ -3,10 +3,11 @@
 import FormHeader from '@/app/components/FormHeader';
 import React from 'react'
 import { usePathname } from 'next/navigation';
+import SuccessNotification from '@/app/components/SuccessNotification';
+import UnsuccessfulNotification from '@/app/components/UnsuccessfulNotification';
 
 const getForm = async () => {
 	
-
 	try {
 		const pathname = usePathname();
 		console.log(usePathname());
@@ -36,6 +37,8 @@ export default async function Form() {
 			>
 				Submit
 			</button> */}
+			<SuccessNotification/>
+			<UnsuccessfulNotification/>
 		</div>
 	);
 }
