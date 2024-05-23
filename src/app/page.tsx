@@ -18,7 +18,7 @@ export default function Home() {
 				}
 
 				const data = await result.json();
-				setForms(data);
+				setForms(data.forms);
 			} catch (error) {
 				console.error("Error loading forms", error);
 			}
