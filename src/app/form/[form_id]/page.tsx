@@ -5,10 +5,11 @@ import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation';
 import SuccessNotification from '@/app/components/SuccessNotification';
 import UnsuccessfulNotification from '@/app/components/UnsuccessfulNotification';
+import { ApiForm } from '@/models/Form';
 
 export default function Form() {
 
-	const [form, setForm] = useState(null);
+	const [form, setForm] = useState<ApiForm | null>(null);
 	const pathname = usePathname();
 
 	useEffect(() => {
@@ -29,7 +30,7 @@ export default function Form() {
 			}
 		};
 		getForm();
-	}, []);
+	}, [pathname]);
 
 	return (
 		<div className='mx-4'>

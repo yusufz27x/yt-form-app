@@ -30,7 +30,7 @@ const FormHeader = () => {
 	}, [pathname]);
 
 	return (
-		<div className="mt-12" style={{paddingTop: '5vh'}}>
+		<div className="mt-12" style={{paddingTop: '2vh'}}>
 			<Logo />
 			{form ? (
 				<>
