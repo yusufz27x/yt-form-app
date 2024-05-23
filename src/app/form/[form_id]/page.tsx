@@ -1,7 +1,7 @@
 'use client'
 
 import FormHeader from '@/app/components/FormHeader';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation';
 import SuccessNotification from '@/app/components/SuccessNotification';
 import UnsuccessfulNotification from '@/app/components/UnsuccessfulNotification';
@@ -21,8 +21,18 @@ const getForm = async () => {
 	} catch (error) { console.log("Error loading form", error); }
 }
 
-export default async function Form() {
-	const test = await getForm();
+export default function Form() {
+	
+	const [form, setForm] = useState(null);
+	const pathname = window.location.pathname.split("/").pop();
+
+	useEffect(() => {
+		const fetchFormData = async () => {
+			const formData = await getForm();
+			setForm(formData);
+		};
+		fetchFormData();
+	}, []);
 
 	return (
 		<div className='mx-4'>
