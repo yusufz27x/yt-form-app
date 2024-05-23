@@ -26,10 +26,10 @@ export default function Home() {
 		fetchForms();
 	}, []);
 
-	const handleSubmit = (e: { preventDefault: () => void }) => {
+	/* const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		console.log('Form Submitted!')
-	}
+	} */
 
 	return (
 		<main className="flex justify-center items-start h-screen" style={{ paddingTop: '10vh' }}>
