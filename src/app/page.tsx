@@ -1,30 +1,35 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ApiForm } from "../models/Form"
 import Link from 'next/link'
 
-const getForms = async () => {
+export default function Home() {
 
-	try {
-		const result = await fetch("http://localhost:3000/api/form", { cache: "no-store", });
+	const [forms, setForms] = useState([]);
 
-		if (!result.ok) {
-			throw new Error('Failed to fetch forms');
-		}
+	useEffect(() => {
+		const fetchForms = async () => {
+			try {
+				const result = await fetch("http://localhost:3000/api/form", { cache: "no-store" });
 
-		return result.json();
-	} catch (error) { console.log("Error loading forms", error); }
-}
+				if (!result.ok) {
+					throw new Error('Failed to fetch forms');
+				}
 
-export default async function Home() {
+				const data = await result.json();
+				setForms(data);
+			} catch (error) {
+				console.error("Error loading forms", error);
+			}
+		};
+		fetchForms();
+	}, []);
 
 	const handleSubmit = (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 		console.log('Form Submitted!')
 	}
-
-	const { forms } = await getForms();
 
 	return (
 		<main className="flex justify-center items-start h-screen" style={{ paddingTop: '10vh' }}>
