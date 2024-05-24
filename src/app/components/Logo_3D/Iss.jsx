@@ -7,7 +7,7 @@ export default function Model(props) {
   const group = useRef()
 
   useFrame(() => {
-    group.current.rotation.y +=0.01 // Increase the rotation speed here
+    group.current.rotation.y +=0.003 // Increase the rotation speed here
   })
 
   return (

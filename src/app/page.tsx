@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import { ApiForm } from "../models/Form"
 import Link from 'next/link'
+import Button from '@mui/material/Button';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function Home() {
 
@@ -35,22 +37,17 @@ export default function Home() {
 		<main className="flex justify-center items-start h-screen" style={{ paddingTop: '10vh' }}>
 			<div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
 				{forms.map((form: ApiForm) => (
-					<Link key={form._id.$oid} href={`/form/${form._id}`} className='my-10 rounded-lg bg-gray-100 p-4 flex items-center justify-between'>
-
-						<div></div>
-
-						<div>
-							<div className='text-5xl text-center text-orange-400 font-extrabold mb-2'>{form.name}</div>
-							<div className='text-3xl text-center text-orange-400 font-light mb-2'>{form.description}</div>
-						</div>
-
-						<div className='ml-4'>
-							<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-							</svg>
-						</div>
-						
-					</Link>
+					<Button
+					variant='contained'
+					key={form._id.$oid}
+					href={`/form/${form._id}`}
+					endIcon={<ArrowForwardIcon />}
+				>				
+					<div className='rounded-3xl justify-center items-center'>
+						<div> {form.name}</div>
+						<div> {form.description}</div>
+					</div>
+				</Button>
 				))}
 			</div>
 		</main>

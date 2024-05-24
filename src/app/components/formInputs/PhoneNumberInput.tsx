@@ -1,46 +1,53 @@
 import React, { useState } from 'react'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+// import MuiPhoneNumber from 'mui-phone-number';
 
 const PhoneNumberInput = () => {
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handlePhoneNumberChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+  const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setPhoneNumber(e.target.value)
+    setErrorMessage('') // Clear the error message when user starts typing
   }
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault()
-    if (phoneNumber.trim()) {
+  const handleBlur = () => {
+    if (!phoneNumber.trim()) {
+      setErrorMessage('Phone number cannot be empty')
+    } else if (!validatePhoneNumber(phoneNumber)) {
+      setErrorMessage('Please enter a valid phone number in the format 05xxAAAxxxx')
+    } else {
       console.log('Phone Number submitted:', phoneNumber)
+      setErrorMessage('') // Clear any previous error messages
     }
   }
 
+  const validatePhoneNumber = (phone: string) => {
+    const phoneRegex = /^0\d{3}\s*\d{3}\s*\d{4}$/
+    return phoneRegex.test(phone)
+  }
+  
   return (
-    <div className='flex justify-center items-center bg-slate-300 rounded-3xl my-2 p-6'>
-      <div className='w-full max-w-lg'>
-        <form onSubmit={handleSubmit}>
-          <div className='mb-1'>
-            <label htmlFor='phone' className='text-slate-600'>
-              Phone Number:
-            </label>
-            <input
-              id='phone'
-              type='tel'
-              pattern='0[0-9]{3} [0-9]{3} [0-9]{4}'
-              placeholder='05XX XXX XXXX'
-              className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 text-black'
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-            />
-            {phoneNumberErrorMessage && <div style={{ color: 'red' }}>{phoneNumberErrorMessage}</div>}
-          </div>
-          <button type='submit' className='bg-orange-400 rounded-md px-2 py-1 justify-center '>
-            Submit
-          </button>
-        </form>
-      </div>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        component='form'
+        sx={{ '& .MuiTextField-root': { m: 1, width: 'flex' } }}
+        noValidate
+        autoComplete='off'
+      >
+        <TextField
+          error={Boolean(errorMessage)}
+          helperText={errorMessage}
+          label={"Phone Number"}
+          placeholder={"0 5xx xxx xxxx"}
+          id='outlined-error-helper-text'
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      </Box>
     </div>
-  )
+  );
 }
 
 export default PhoneNumberInput

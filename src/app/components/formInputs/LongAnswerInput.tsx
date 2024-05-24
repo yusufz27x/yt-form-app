@@ -1,90 +1,45 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
-// LongAnswerInput component
-interface LongAnswerInputProps {
-  label: string;
-  name: string;
-  value: string;
-  onChange: (value: string) => void;
-}
+const LongAnswerInput = () => {
+  const [answer, setAnswer] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-const LongAnswerInput: React.FC<LongAnswerInputProps> = ({
-  label,
-  name,
-  value,
-  onChange,
-}) => {
-  const [errorMessage, setErrorMessage] = React.useState<string>("");
+  const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setAnswer(e.target.value);
+    setErrorMessage(''); // Clear the error message when user starts typing
+  };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    const inputValue = e.target.value;
-    onChange(inputValue);
-
-    // Check if input value is empty
-    if (inputValue.trim() === "") {
-      setErrorMessage("Bu alan boş bırakılamaz.");
+  const handleBlur = () => {
+    if (!answer.trim()) {
+      setErrorMessage('Please enter an answer or "-" for blank.');
+    } else if (answer.length > 500) {
+      setErrorMessage('Please enter a long answer (<500 char).');
     } else {
-      setErrorMessage("");
-    }
-
-    // Check length of input value
-    if (inputValue.length > 10) {
-      setErrorMessage("Metin 10 karakterden uzun olamaz.");
+      console.log('Long answer submitted:', answer);
+      setErrorMessage(''); // Clear any previous error messages
     }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <TextField
-        required
-        error={Boolean(errorMessage)}
-        helperText={errorMessage}
-        id={name}
-        label={label}
-        name={name}
-        value={value}
-        onChange={handleChange}
-        multiline
-        rows={3}
-        variant="outlined"
-      />
-    </div>
-  );
-};
-
-const MyForm: React.FC = () => {
-  const [longAnswer, setLongAnswer] = React.useState<string>("");
-
-  const handleLongAnswerChange = (value: string) => {
-    setLongAnswer(value);
-  };
-
-  return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": {
-          m: 1,
-          width: "flex",
-        },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        {/* LongAnswerInput component */}
-        <LongAnswerInput
-          label="Uzun Metin Girişi"
-          name="longAnswer"
-          value={longAnswer}
-          onChange={handleLongAnswerChange}
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        component='form'
+        sx={{ '& .MuiTextField-root': { m: 1, width: "35ch" } }}
+        noValidate
+        autoComplete='off'
+      >
+        <TextField
+          error={Boolean(errorMessage)}
+          helperText={errorMessage}
+          id='outlined-error-helper-text'
+          multiline
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
-      </div>
-    </Box>
+      </Box>
+    </div>
   );
 };
 

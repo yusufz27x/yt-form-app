@@ -1,52 +1,50 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
-interface Props {
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-}
+const StudentNumberInput = () => {
+  const [studentNumber, setStudentNumber] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-const StudentNumberInput: React.FC<Props> = ({ label, value, onChange }) => {
-  const [errorMessage, setErrorMessage] = React.useState<string>("");
+  const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setStudentNumber(e.target.value);
+    setErrorMessage(''); // Clear the error message when user starts typing
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    onChange(inputValue);
-
+  const handleBlur = (e: { target: { value: React.SetStateAction<string> } }) => {
     // Check if input value is empty
-    if (inputValue.trim() === "") {
-      setErrorMessage("Bu alan boş bırakılamaz.");
+    if (!studentNumber.trim()) {
+      setErrorMessage('Bu alan boş bırakılamaz.');
     } else {
-      setErrorMessage("");
+      setErrorMessage('');
     }
 
     // Öğrenci numarası kontrolü yapılabilir
-    if (!/^\d{9}$/.test(inputValue) && !/^\d{6}\d{3}[Yy]$/.test(inputValue)) {
+    if (!/^\d{9}$/.test(studentNumber) && !/^\d{6}\d{3}[Yy]$/.test(studentNumber)) {
       setErrorMessage(
-        "Öğrenci numarası 9 haneli veya 290290290Y formatında olmalıdır."
+        'Öğrenci numarası 9 haneli veya 290290290Y formatında olmalıdır.'
       );
     } else {
-      setErrorMessage("");
+      setErrorMessage('');
     }
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Box
-        component="form"
-        sx={{ "& .MuiTextField-root": { m: 1, width: "flex" } }}
+        component='form'
+        sx={{ '& .MuiTextField-root': { m: 1, width: 'flex' } }}
         noValidate
-        autoComplete="off"
+        autoComplete='off'
       >
         <TextField
           error={Boolean(errorMessage)}
           helperText={errorMessage}
-          id="outlined-error-helper-text"
-          label={label}
-          defaultValue={value}
+          label={"Student Number"}
+          placeholder={"230123456"}
+          id='outlined-error-helper-text'
           onChange={handleChange}
+          onBlur={handleBlur}
         />
       </Box>
     </div>

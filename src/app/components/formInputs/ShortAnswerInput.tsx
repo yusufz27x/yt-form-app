@@ -1,46 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent  } from 'react'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
-const ShortAnswerInput = ({ question }) => {
+const ShortAnswerInput = () => {
   const [answer, setAnswer] = useState('')
-  const [shortAnswerErrorMessage, setShortAnswerErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleShortAnswerChange = (e: { target: { value: React.SetStateAction<string> } }) => {
-    setAnswer(e.target.value)
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    let input = e.target.value;
+    if (input.length <= 100) {
+      setAnswer(input);
+      setErrorMessage('');
+    } else {
+      setAnswer(input.substring(0, 100)); // Truncate input to 100 characters
+      setErrorMessage('Maximum character limit reached');
+    }
   }
 
-  const handleSubmit = () => {
+  const handleBlur = () => {
     if (!answer.trim()) {
-      setShortAnswerErrorMessage('Please enter an answer or "-" for blank.')
-    } else if (answer.length > 100) {
-      setShortAnswerErrorMessage('Please enter a short answer (<100 char).')
+      setErrorMessage('Please enter an answer or "-" for blank.');
     } else {
-      console.log('Short answer submitted:', answer)
+      console.log('Short answer submitted:', answer);
+      setErrorMessage(''); // Clear any previous error messages
     }
   }
 
   return (
-    <div className='flex justify-center items-center bg-slate-300 rounded-3xl my-2 p-6'>
-      <div className='w-full max-w-lg'>
-        <form onSubmit={handleSubmit}>
-          <div className='mb-1'>
-            <label htmlFor='shortAnswer' className='text-slate-600'>
-              {question}
-            </label>
-            <textarea
-              id='shortAnswer'
-              className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500 text-black'
-              value={answer}
-              onChange={handleShortAnswerChange}
-            />
-            {shortAnswerErrorMessage && <div style={{ color: 'red' }}>{shortAnswerErrorMessage}</div>}
-          </div>
-          <button type='submit' className='bg-orange-400 rounded-md px-2 py-1 justify-center '>
-            Submit
-          </button>
-        </form>
-      </div>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Box
+        component='form'
+        sx={{ '& .MuiTextField-root': { m: 1, width: 'flex' } }}
+        noValidate
+        autoComplete='off'
+      >
+        <TextField
+          error={Boolean(errorMessage)}
+          helperText={errorMessage}
+          id='outlined-error-helper-text'
+          multiline
+          value={answer}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      </Box>
     </div>
-  )
+  );
 }
 
-export default ShortAnswerInput
+export default ShortAnswerInput;

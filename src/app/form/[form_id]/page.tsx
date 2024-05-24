@@ -1,8 +1,8 @@
 'use client'
-
-import FormHeader from '@/app/components/FormHeader';
 import React, { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation';
+
+import FormHeader from '@/app/components/FormHeader';
 import SuccessNotification from '@/app/components/SuccessNotification';
 import UnsuccessfulNotification from '@/app/components/UnsuccessfulNotification';
 import { ApiForm, ApiQuestion } from '@/models/Form';
@@ -54,32 +54,21 @@ export default function Form() {
 								{(() => {
 									switch (question.type) {
 										case 0:
-											return <p>Error displaying question 0.</p>
 											return <ShortAnswerInput />
-											break;
 										case 1:
 											return <EmailInput />
-											break;
 										case 2:
 											return <FullName />
-											break;
 										case 3:
 											return <PhoneNumberInput />
-											break;
 										case 4:
-											return <p>Error displaying question 4.</p>
 											return <LongAnswerInput />
-											break;
 										case 5:
-											return <p>Error displaying question 5.</p>
-											return <MultipleChoiceInput></MultipleChoiceInput>
-											break;
+											return <p>Error displaying question.</p>
+											return <MultipleChoiceInput label={question.question} options={question.options} value={"question.value"} onChange={handleOptionChange} />;
 										case 6:
-											return <p>Error displaying question 6.</p>
 											return <DepartmentInput />
-											break;
 										case 7:
-											return <p>Error displaying question 7.</p>
 											return <StudentNumberInput />
 										default:
 											return <p>Error displaying question.</p>
@@ -101,8 +90,8 @@ export default function Form() {
 			>
 				Submit
 			</button> */}
-			<SuccessNotification />
-			<UnsuccessfulNotification />
+			{/* <SuccessNotification /> */}
+			{/* <UnsuccessfulNotification /> */}
 		</div>
 	);
 }
