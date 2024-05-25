@@ -35,14 +35,15 @@ const DepartmentInput = () => {
   };
 
   return (
-    <div>
-      <FormControl fullWidth>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <FormControl>
         <Select
           labelId="department-label"
+          defaultValue="Seçiniz"
           id="department-select"
           onChange={handleChange}
         >
-          <MenuItem value="">
+          <MenuItem value="Seçiniz">
             <em>Seçiniz</em>
           </MenuItem>
           {departmentList.map((department: string) => (

@@ -50,7 +50,7 @@ export default function Form() {
 					{form.questions.map((question: ApiQuestion) => (
 						<div className='flex justify-center'>
 							<div className="bg-gray-100 w-1/3 rounded-3xl p-4 m-3 items-center">
-								<p>{question.question}</p>
+								<p className="text-center mb-4">{question.question}</p>
 								{(() => {
 									switch (question.type) {
 										case 0:

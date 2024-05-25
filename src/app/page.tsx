@@ -3,8 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import { ApiForm } from "../models/Form"
 import Link from 'next/link'
+import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { deepOrange, orange } from '@mui/material/colors';
 
 export default function Home() {
 
@@ -35,20 +38,29 @@ export default function Home() {
 
 	return (
 		<main className="flex justify-center items-start h-screen" style={{ paddingTop: '10vh' }}>
-			<div className='w-1/3 p-4 bg-white rounded-3xl justify-center items-center'>
+			<div className='w-1/4 p-4 bg-white rounded-3xl justify-center items-center'>
+				<Stack spacing={2} divider={<Divider flexItem />}>
 				{forms.map((form: ApiForm) => (
 					<Button
 					variant='contained'
 					key={form._id.$oid}
 					href={`/form/${form._id}`}
 					endIcon={<ArrowForwardIcon />}
-				>				
+					sx={{
+						bgcolor: deepOrange[400],
+						color: 'white',
+						'&:hover': {
+							bgcolor: orange[400],
+						},
+					}}
+					>				
 					<div className='rounded-3xl justify-center items-center'>
-						<div> {form.name}</div>
-						<div> {form.description}</div>
+						<div className='text-xl font-bold'> {form.name}</div>
+						<div className='normal-case'> {form.description}</div>
 					</div>
-				</Button>
+					</Button>
 				))}
+				</Stack>
 			</div>
 		</main>
 	);
