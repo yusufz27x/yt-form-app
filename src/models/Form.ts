@@ -69,5 +69,5 @@ export interface ApiQuestion {
     type: number;
     question: string;
     isRequired: boolean;
-    options?: string[];
+    options: string[];
 }

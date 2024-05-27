@@ -14,10 +14,12 @@ import LongAnswerInput from '@/app/components/formInputs/LongAnswerInput';
 import MultipleChoiceInput from '@/app/components/formInputs/MultipleChoiceInput';
 import DepartmentInput from '@/app/components/formInputs/DepartmentNumber';
 import StudentNumberInput from '@/app/components/formInputs/StudentNumber';
+import { ApiApplication } from '@/models/Application';
 
 export default function Form() {
 
 	const [form, setForm] = useState<ApiForm | null>(null);
+	const [application, setApplication] = useState<ApiApplication | null>(null);
 	const pathname = usePathname();
 
 	useEffect(() => {
@@ -39,6 +41,28 @@ export default function Form() {
 		};
 		getForm();
 	}, [pathname]);
+
+	const handleSubmit = async () => {
+		try {
+			const response = await fetch('http://localhost:3000/api/application', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(form), // Assuming form data is stored in the state
+			});
+
+			if (response.ok) {
+				// Handle success scenario
+				console.log('Form submitted successfully');
+			} else {
+				// Handle error scenario
+				console.error('Failed to submit form');
+			}
+		} catch (error) {
+			console.error('Error submitting form', error);
+		}
+	};
 
 	return (
 		<div className='mx-4'>
@@ -64,8 +88,7 @@ export default function Form() {
 										case 4:
 											return <LongAnswerInput />
 										case 5:
-											return <p>Error displaying question.</p>
-											return <MultipleChoiceInput label={question.question} options={question.options} value={"question.value"} onChange={handleOptionChange} />;
+											return <MultipleChoiceInput label={question.question} options={question.options}/>;
 										case 6:
 											return <DepartmentInput />
 										case 7:
@@ -75,8 +98,20 @@ export default function Form() {
 									}
 								})()}
 							</div>
+
+
 						</div>
+
 					))}
+					<div className='text-center p-4' style={{ paddingBottom: '10vh' }}>
+						<button
+							type="submit"
+							className="py-3 px-6 w-fit bg-blue-500 text-white rounded-md mt-4"
+							onClick={handleSubmit}
+						>
+							Submit
+						</button>
+					</div>
 				</div>
 			) : (
 				<p className="text-center text-[#f0d1b8]">Loading...</p>

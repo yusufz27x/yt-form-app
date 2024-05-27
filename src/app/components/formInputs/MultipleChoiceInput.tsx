@@ -7,18 +7,13 @@ import FormLabel from "@mui/material/FormLabel";
 interface Props {
   label: string;
   options: string[];
-  value: string;
-  onChange: (value: string) => void;
 }
 
-const MultipleChoiceInput: React.FC<Props> = ({
-  label,
-  options,
-  value,
-  onChange,
-}) => {
+const MultipleChoiceInput: React.FC<Props> = ({ label, options }) => {
+  const [value, setValue] = React.useState<string>("");
+
   const handleClick = (selectedValue: string) => {
-    onChange(selectedValue);
+    setValue(selectedValue);
   };
 
   return (
