@@ -37,29 +37,29 @@ export default function Home() {
 	} */
 
 	return (
-		<main className="flex justify-center items-start h-screen" style={{ paddingTop: '10vh' }}>
+		<main className="flex justify-center items-start" style={{ paddingTop: '10vh' }}>
 			<div className='w-1/4 p-4 bg-white rounded-3xl justify-center items-center'>
 				<Stack spacing={2} divider={<Divider flexItem />}>
-				{forms.map((form: ApiForm) => (
-					<Button
-					variant='contained'
-					key={form._id.$oid}
-					href={`/form/${form._id}`}
-					endIcon={<ArrowForwardIcon />}
-					sx={{
-						bgcolor: deepOrange[400],
-						color: 'white',
-						'&:hover': {
-							bgcolor: orange[400],
-						},
-					}}
-					>				
-					<div className='rounded-3xl justify-center items-center'>
-						<div className='text-xl font-bold'> {form.name}</div>
-						<div className='normal-case'> {form.description}</div>
-					</div>
-					</Button>
-				))}
+					{forms.map((form: ApiForm) => (
+						<Button
+							variant='contained'
+							key={form._id.$oid}
+							href={`/form/${form._id}`}
+							endIcon={<ArrowForwardIcon />}
+							sx={{
+								bgcolor: deepOrange[400],
+								color: 'white',
+								'&:hover': {
+									bgcolor: orange[400],
+								},
+							}}
+						>
+							<div className='rounded-3xl justify-center items-center'>
+								<div className='text-xl font-bold'> {form.name}</div>
+								<div className='normal-case'> {form.description}</div>
+							</div>
+						</Button>
+					))}
 				</Stack>
 			</div>
 		</main>
