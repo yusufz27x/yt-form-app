@@ -14,13 +14,16 @@ import LongAnswerInput from '@/app/components/formInputs/LongAnswerInput';
 import MultipleChoiceInput from '@/app/components/formInputs/MultipleChoiceInput';
 import DepartmentInput from '@/app/components/formInputs/DepartmentNumber';
 import StudentNumberInput from '@/app/components/formInputs/StudentNumber';
-import { ApiApplication } from '@/models/Application';
+import { ApiAnswer, ApiApplication } from '@/models/Application';
 
 export default function Form() {
 
 	const [form, setForm] = useState<ApiForm | null>(null);
 	const [application, setApplication] = useState<ApiApplication | null>(null);
+	const [answers, setAnswers] = useState<ApiAnswer[]>([]);
 	const pathname = usePathname();
+	/* const answers: ApiAnswer[] = [];
+	const i: number = 0; */
 
 	useEffect(() => {
 
@@ -42,6 +45,25 @@ export default function Form() {
 		getForm();
 	}, [pathname]);
 
+	// TODO: answer has one character missing
+
+	/* const updateFormAnswer = (answer: string, type: number) => {
+		const updatedAnswer: ApiAnswer = {
+			type: type,
+			answer: answer,
+		};
+		setAnswers([...answers, updatedAnswer]);
+		console.log(answers);
+	}; */
+
+	const updateFormAnswer = (answer: string, type: number) => {
+		const updatedAnswer: ApiAnswer = {
+			type: type,
+			answer: answer,
+		};
+		setAnswers([updatedAnswer]);
+	};
+
 	const handleSubmit = async () => {
 		try {
 			const response = await fetch('http://localhost:3000/api/application', {
@@ -50,16 +72,18 @@ export default function Form() {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(form), // Assuming form data is stored in the state
+
 			});
 
 			if (response.ok) {
-				// Handle success scenario
+				<SuccessNotification />
 				console.log('Form submitted successfully');
 			} else {
-				// Handle error scenario
+				<UnsuccessfulNotification />
 				console.error('Failed to submit form');
 			}
 		} catch (error) {
+			<UnsuccessfulNotification />
 			console.error('Error submitting form', error);
 		}
 	};
@@ -78,7 +102,7 @@ export default function Form() {
 								{(() => {
 									switch (question.type) {
 										case 0:
-											return <ShortAnswerInput />
+											return <ShortAnswerInput updateFormAnswer={updateFormAnswer} />
 										case 1:
 											return <EmailInput />
 										case 2:
@@ -88,7 +112,7 @@ export default function Form() {
 										case 4:
 											return <LongAnswerInput />
 										case 5:
-											return <MultipleChoiceInput label={question.question} options={question.options}/>;
+											return <MultipleChoiceInput label={question.question} options={question.options} />;
 										case 6:
 											return <DepartmentInput />
 										case 7:
@@ -116,17 +140,6 @@ export default function Form() {
 			) : (
 				<p className="text-center text-[#f0d1b8]">Loading...</p>
 			)}
-
-
-			{/* TODO: submit button with update API */}
-			{/* <button
-				type="submit"
-				className="py-3 px-6 w-fit"
-			>
-				Submit
-			</button> */}
-			{/* <SuccessNotification /> */}
-			{/* <UnsuccessfulNotification /> */}
 		</div>
 	);
 }
