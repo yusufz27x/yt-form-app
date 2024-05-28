@@ -32,6 +32,7 @@ const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer, answerSize }
 				updateFormAnswer(answer, 0);
 			}
 			else {
+				// TODO: This needs to be by ID
 				updateFormAnswer(answer, 0, answerSize - 1);
 			}
 		}

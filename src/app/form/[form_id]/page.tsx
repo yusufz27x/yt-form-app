@@ -102,7 +102,7 @@ export default function Form() {
 										case 0:
 											return <ShortAnswerInput updateFormAnswer={updateFormAnswer} answerSize={answers.length} />
 										case 1:
-											return <EmailInput />
+											return <EmailInput updateFormAnswer={updateFormAnswer} answerSize={answers.length} />
 										case 2:
 											return <FullName />
 										case 3:
