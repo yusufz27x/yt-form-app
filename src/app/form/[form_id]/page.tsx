@@ -105,17 +105,17 @@ export default function Form() {
 										case 1:
 											return <EmailInput updateFormAnswer={updateFormAnswer} />
 										case 2:
-											return <FullName />
+											return <FullName updateFormAnswer={updateFormAnswer} />
 										case 3:
-											return <PhoneNumberInput />
+											return <PhoneNumberInput updateFormAnswer={updateFormAnswer} />
 										case 4:
-											return <LongAnswerInput />
+											return <LongAnswerInput updateFormAnswer={updateFormAnswer} />
 										case 5:
-											return <MultipleChoiceInput label={question.question} options={question.options} />;
+											return <MultipleChoiceInput label={question.question} options={question.options} updateFormAnswer={updateFormAnswer} />;
 										case 6:
-											return <DepartmentInput />
+											return <DepartmentInput updateFormAnswer={updateFormAnswer} />
 										case 7:
-											return <StudentNumberInput />
+											return <StudentNumberInput updateFormAnswer={updateFormAnswer} />
 										default:
 											return <p>Error displaying question.</p>
 									}
