@@ -60,6 +60,7 @@ export default function Form() {
 			// Add a new answer if no index to update is provided
 			setAnswers(answers => [...answers, updatedAnswer]);
 		}
+		return answers.length - 1;
 	};
 
 	const handleSubmit = async () => {
@@ -100,9 +101,9 @@ export default function Form() {
 								{(() => {
 									switch (question.type) {
 										case 0:
-											return <ShortAnswerInput updateFormAnswer={updateFormAnswer} answerSize={answers.length} />
+											return <ShortAnswerInput updateFormAnswer={updateFormAnswer} />
 										case 1:
-											return <EmailInput updateFormAnswer={updateFormAnswer} answerSize={answers.length} />
+											return <EmailInput updateFormAnswer={updateFormAnswer} />
 										case 2:
 											return <FullName />
 										case 3:

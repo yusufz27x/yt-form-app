@@ -4,8 +4,9 @@ import TextField from '@mui/material/TextField';
 import { InputProps } from '@/models/Application'
 
 
-const EmailInput: React.FC<InputProps> = ({ updateFormAnswer, answerSize }) => {
+const EmailInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
 	const [email, setEmail] = useState('')
+	const [answerIndex, setAnswerIndex] = useState(-1);
 	const [errorMessage, setErrorMessage] = useState('')
 
 	const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -21,12 +22,11 @@ const EmailInput: React.FC<InputProps> = ({ updateFormAnswer, answerSize }) => {
 		} else {
 			console.log('Email submitted:', email)
 			setErrorMessage('') // Clear any previous error messages
-			if (email == '') {
-				updateFormAnswer(email, 0);
+			if (answerIndex == -1) {
+				setAnswerIndex(updateFormAnswer(email, 1));
 			}
 			else {
-				// TODO: This needs to be by ID
-				updateFormAnswer(email, 0, answerSize - 1);
+				updateFormAnswer(email, 1, answerIndex);
 			}
 		}
 	}

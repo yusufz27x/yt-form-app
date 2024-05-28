@@ -39,6 +39,5 @@ export interface ApiAnswer {
 }
 
 export interface InputProps {
-	updateFormAnswer: (answer: string, type: number, index?: number) => void;
-	answerSize: number;
+	updateFormAnswer: (answer: string, type: number, index?: number) => number;
 }

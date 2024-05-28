@@ -6,8 +6,9 @@ import { InputProps } from '@/models/Application'
 
 
 
-const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer, answerSize }) => {
+const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
 	const [answer, setAnswer] = useState('')
+	const [answerIndex, setAnswerIndex] = useState(-1);
 	const [errorMessage, setErrorMessage] = useState('')
 
 	const handleChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -28,12 +29,11 @@ const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer, answerSize }
 		} else {
 			console.log('Short answer submitted:', answer);
 			setErrorMessage(''); // Clear any previous error messages
-			if (answer == '') {
-				updateFormAnswer(answer, 0);
+			if (answerIndex == -1) {
+				setAnswerIndex(updateFormAnswer(answer, 0));
 			}
 			else {
-				// TODO: This needs to be by ID
-				updateFormAnswer(answer, 0, answerSize - 1);
+				updateFormAnswer(answer, 0, answerIndex);
 			}
 		}
 	}
