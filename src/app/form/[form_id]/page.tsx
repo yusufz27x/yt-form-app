@@ -65,6 +65,18 @@ export default function Form() {
 
 	const handleSubmit = async () => {
 		try {
+
+			const applicationData: ApiApplication = {
+
+				form_id: `${pathname.split("/").pop()}`,
+
+
+				answers: answers,
+
+			}
+
+			setApplication(applicationData);
+
 			const response = await fetch('http://localhost:3000/api/application', {
 				method: 'POST',
 				headers: {

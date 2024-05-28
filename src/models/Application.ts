@@ -22,13 +22,9 @@ try {
 export default ApplicationsModel;
 
 export interface ApiApplication {
-	_id: {
-		$oid: string;
-	};
 
-	form_id: {
-		$oid: string;
-	};
+
+	form_id: string,
 
 	answers: ApiAnswer[];
 }
