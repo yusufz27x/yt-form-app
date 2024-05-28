@@ -1,12 +1,12 @@
 import React, { useState, ChangeEvent } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { ApiAnswer } from '@/models/Application';
+import { InputProps } from '@/models/Application'
 
-interface ShortAnswerInputProps {
-	updateFormAnswer: (answer: string, type: number) => void;
-}
 
-const ShortAnswerInput: React.FC<ShortAnswerInputProps> = ({ updateFormAnswer }) => {
+
+const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
 	const [answer, setAnswer] = useState('')
 	const [errorMessage, setErrorMessage] = useState('')
 
@@ -16,7 +16,6 @@ const ShortAnswerInput: React.FC<ShortAnswerInputProps> = ({ updateFormAnswer })
 
 			setAnswer(input);
 			setErrorMessage('');
-			updateFormAnswer(answer, 0);
 		} else {
 			setAnswer(input.substring(0, 100)); // Truncate input to 100 characters
 			setErrorMessage('Maximum character limit reached');
@@ -29,6 +28,7 @@ const ShortAnswerInput: React.FC<ShortAnswerInputProps> = ({ updateFormAnswer })
 		} else {
 			console.log('Short answer submitted:', answer);
 			setErrorMessage(''); // Clear any previous error messages
+			updateFormAnswer(answer, 0);
 		}
 	}
 

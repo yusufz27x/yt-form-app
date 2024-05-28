@@ -22,8 +22,6 @@ export default function Form() {
 	const [application, setApplication] = useState<ApiApplication | null>(null);
 	const [answers, setAnswers] = useState<ApiAnswer[]>([]);
 	const pathname = usePathname();
-	/* const answers: ApiAnswer[] = [];
-	const i: number = 0; */
 
 	useEffect(() => {
 
@@ -45,23 +43,12 @@ export default function Form() {
 		getForm();
 	}, [pathname]);
 
-	// TODO: answer has one character missing
-
-	/* const updateFormAnswer = (answer: string, type: number) => {
-		const updatedAnswer: ApiAnswer = {
-			type: type,
-			answer: answer,
-		};
-		setAnswers([...answers, updatedAnswer]);
-		console.log(answers);
-	}; */
-
 	const updateFormAnswer = (answer: string, type: number) => {
 		const updatedAnswer: ApiAnswer = {
 			type: type,
 			answer: answer,
 		};
-		setAnswers([updatedAnswer]);
+		setAnswers(answers => [...answers, updatedAnswer]);
 	};
 
 	const handleSubmit = async () => {

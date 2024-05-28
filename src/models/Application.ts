@@ -37,3 +37,7 @@ export interface ApiAnswer {
     type: number;
     answer?: string[] | string;
 }
+
+export interface InputProps {
+    updateFormAnswer: (answer: string, type: number) => void;
+}
