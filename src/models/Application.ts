@@ -2,42 +2,43 @@ import mongoose, { Schema } from "mongoose";
 import { ApiQuestion } from "./Form";
 
 const applicationSchema = new Schema({
-    formID: {
-        type: Schema.ObjectId,
-        required: false,
-    },
-    answers: {
-        type: [String],
-        required: true,
-    }
+	formID: {
+		type: Schema.ObjectId,
+		required: false,
+	},
+	answers: {
+		type: [String],
+		required: true,
+	}
 
 }, { timestamps: true });
 
 let ApplicationsModel: mongoose.Model<any>
 try {
-    ApplicationsModel = mongoose.model("applications")
+	ApplicationsModel = mongoose.model("applications")
 } catch (error) {
-    ApplicationsModel = mongoose.model("applications", applicationSchema)
+	ApplicationsModel = mongoose.model("applications", applicationSchema)
 }
 export default ApplicationsModel;
 
 export interface ApiApplication {
-    _id: {
-        $oid: string;
-    };
+	_id: {
+		$oid: string;
+	};
 
-    form_id: {
-        $oid: string;
-    };
+	form_id: {
+		$oid: string;
+	};
 
-    answers: ApiAnswer[];
+	answers: ApiAnswer[];
 }
 
 export interface ApiAnswer {
-    type: number;
-    answer?: string[] | string;
+	type: number;
+	answer?: string[] | string;
 }
 
 export interface InputProps {
-    updateFormAnswer: (answer: string, type: number) => void;
+	updateFormAnswer: (answer: string, type: number, index?: number) => void;
+	answerSize: number;
 }

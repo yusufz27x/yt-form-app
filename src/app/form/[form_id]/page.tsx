@@ -43,12 +43,23 @@ export default function Form() {
 		getForm();
 	}, [pathname]);
 
-	const updateFormAnswer = (answer: string, type: number) => {
+	const updateFormAnswer = (answer: string, type: number, index?: number) => {
 		const updatedAnswer: ApiAnswer = {
 			type: type,
 			answer: answer,
 		};
-		setAnswers(answers => [...answers, updatedAnswer]);
+
+		if (index !== undefined && index >= 0 && index < answers.length) {
+			// Update existing answer at the specified index
+			setAnswers(answers => {
+				const updatedAnswers = [...answers];
+				updatedAnswers[index] = updatedAnswer;
+				return updatedAnswers;
+			});
+		} else {
+			// Add a new answer if no index to update is provided
+			setAnswers(answers => [...answers, updatedAnswer]);
+		}
 	};
 
 	const handleSubmit = async () => {
@@ -89,7 +100,7 @@ export default function Form() {
 								{(() => {
 									switch (question.type) {
 										case 0:
-											return <ShortAnswerInput updateFormAnswer={updateFormAnswer} />
+											return <ShortAnswerInput updateFormAnswer={updateFormAnswer} answerSize={answers.length} />
 										case 1:
 											return <EmailInput />
 										case 2:

@@ -6,7 +6,7 @@ import { InputProps } from '@/models/Application'
 
 
 
-const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
+const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer, answerSize }) => {
 	const [answer, setAnswer] = useState('')
 	const [errorMessage, setErrorMessage] = useState('')
 
@@ -28,7 +28,12 @@ const ShortAnswerInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
 		} else {
 			console.log('Short answer submitted:', answer);
 			setErrorMessage(''); // Clear any previous error messages
-			updateFormAnswer(answer, 0);
+			if (answer == '') {
+				updateFormAnswer(answer, 0);
+			}
+			else {
+				updateFormAnswer(answer, 0, answerSize - 1);
+			}
 		}
 	}
 
