@@ -15,6 +15,9 @@ import MultipleChoiceInput from '@/app/components/formInputs/MultipleChoiceInput
 import DepartmentInput from '@/app/components/formInputs/DepartmentNumber';
 import StudentNumberInput from '@/app/components/formInputs/StudentNumber';
 import { ApiAnswer, ApiApplication } from '@/models/Application';
+import applicationSchema from '@/models/Application';
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default function Form() {
 
@@ -68,12 +71,13 @@ export default function Form() {
 
 			const applicationData: ApiApplication = {
 
+				_id: uuidv4(),
 				form_id: `${pathname.split("/").pop()}`,
-
-
 				answers: answers,
 
 			}
+
+			console.log(answers);
 
 			setApplication(applicationData);
 
