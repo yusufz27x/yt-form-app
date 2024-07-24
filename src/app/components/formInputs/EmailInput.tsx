@@ -6,7 +6,8 @@ import { InputProps } from '@/models/Application'
 
 const EmailInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
 	const [email, setEmail] = useState('')
-	const [answerIndex, setAnswerIndex] = useState(-1);
+	// const [answerIndex, setAnswerIndex] = useState(-1);
+	var answerIndex = -1;
 	const [errorMessage, setErrorMessage] = useState('')
 
 	const handleChange = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -22,12 +23,15 @@ const EmailInput: React.FC<InputProps> = ({ updateFormAnswer }) => {
 		} else {
 			console.log('Email submitted:', email)
 			setErrorMessage('') // Clear any previous error messages
-			if (answerIndex == -1) {
-				setAnswerIndex(updateFormAnswer(email, 1));
+			console.log('Answer index email:', answerIndex);
+			if (answerIndex === -1) {
+				// console.log(updateFormAnswer(email, 1));
+				 answerIndex = (updateFormAnswer(email, 1));
 			}
 			else {
 				updateFormAnswer(email, 1, answerIndex);
 			}
+			console.log('Answer index:', answerIndex);
 		}
 	}
 

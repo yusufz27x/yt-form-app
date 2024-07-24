@@ -16,6 +16,7 @@ import DepartmentInput from '@/app/components/formInputs/DepartmentNumber';
 import StudentNumberInput from '@/app/components/formInputs/StudentNumber';
 import { ApiAnswer, ApiApplication } from '@/models/Application';
 import applicationSchema from '@/models/Application';
+import apiAnswerSchema from '@/models/Application';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -23,7 +24,8 @@ export default function Form() {
 
 	const [form, setForm] = useState<ApiForm | null>(null);
 	const [application, setApplication] = useState<ApiApplication | null>(null);
-	const [answers, setAnswers] = useState<ApiAnswer[]>([]);
+	// const [answers, setAnswers] = useState<ApiAnswer[]>([]);
+	var answers: ApiAnswer[] = [];
 	const pathname = usePathname();
 
 	useEffect(() => {
@@ -52,41 +54,53 @@ export default function Form() {
 			answer: answer,
 		};
 
-		if (index !== undefined && index >= 0 && index < answers.length) {
+		console.log(answers.length);
+		if (answers.length === 0) {
+			answers.push(updatedAnswer);
+		}
+
+		else if (index !== undefined) {
 			// Update existing answer at the specified index
-			setAnswers(answers => {
+			/* setAnswers(answers => {
 				const updatedAnswers = [...answers];
 				updatedAnswers[index] = updatedAnswer;
 				return updatedAnswers;
-			});
+			}); */
+			answers[index] = updatedAnswer;
 		} else {
 			// Add a new answer if no index to update is provided
-			setAnswers(answers => [...answers, updatedAnswer]);
+			// setAnswers(answers => [...answers, updatedAnswer]);
+			answers.push(updatedAnswer);
 		}
+		console.log(answers);
 		return answers.length - 1;
 	};
 
 	const handleSubmit = async () => {
 		try {
 
-			const applicationData: ApiApplication = {
+			const applicationData = {
 
-				_id: uuidv4(),
-				form_id: `${pathname.split("/").pop()}`,
-				answers: answers,
+				// _id: uuidv4(),
+				formID: `${pathname.split("/").pop()}`,
+				answers: answers.map(answer => ({
+					type: answer.type,
+					answer: answer.answer,
+				})),
 
 			}
 
 			console.log(answers);
+			console.log(applicationData);
 
-			setApplication(applicationData);
+			// setApplication(applicationData);
 
 			const response = await fetch('http://localhost:3000/api/application', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(form), // Assuming form data is stored in the state
+				body: JSON.stringify(applicationData), // Assuming form data is stored in the state
 
 			});
 

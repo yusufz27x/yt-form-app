@@ -1,13 +1,26 @@
 import mongoose, { Schema } from "mongoose";
 import { ApiQuestion } from "./Form";
 
+
+// Define a Mongoose schema for ApiAnswer
+const apiAnswerSchema = new Schema({
+    type: {
+        type: Number,
+        required: true,
+    },
+    answer: {
+        type: Schema.Types.Mixed, // Mixed type to allow both string[] and string
+        required: false,
+    }
+});
+
 const applicationSchema = new Schema({
 	formID: {
 		type: Schema.ObjectId,
 		required: false,
 	},
 	answers: {
-		type: [String],
+		type: [apiAnswerSchema],
 		required: true,
 	}
 
@@ -23,7 +36,7 @@ export default ApplicationsModel;
 
 export interface ApiApplication {
 
-	_id: string,
+	// _id: string,
 
 	form_id: string,
 
